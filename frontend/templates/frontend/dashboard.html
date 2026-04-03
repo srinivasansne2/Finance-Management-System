@@ -1,0 +1,121 @@
+{% extends 'frontend/base.html' %}
+
+{% block content %}
+
+<!-- 🔥 CHART.JS -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<h2 class="mb-4 text-center text-md-start">Dashboard</h2>
+
+<!-- 🔥 SUMMARY CARDS -->
+<div class="row g-3">
+
+    <div class="col-12 col-sm-6 col-lg-4">
+        <div class="card shadow text-white bg-success h-100 text-center">
+            <div class="card-body">
+                <h6>Total Income</h6>
+                <h3>₹ {{ data.total_income }}</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-sm-6 col-lg-4">
+        <div class="card shadow text-white bg-danger h-100 text-center">
+            <div class="card-body">
+                <h6>Total Expense</h6>
+                <h3>₹ {{ data.total_expense }}</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-sm-6 col-lg-4 mx-auto">
+        <div class="card shadow text-white bg-primary h-100 text-center">
+            <div class="card-body">
+                <h6>Net Balance</h6>
+                <h3>₹ {{ data.net_balance }}</h3>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- 🔥 CHART SECTION -->
+<div class="row mt-4 g-4">
+
+    <!-- 📊 PIE CHART -->
+    <div class="col-12 col-lg-6">
+        <div class="card shadow h-100">
+            <div class="card-body">
+                <h5 class="text-center mb-3">Expense by Category</h5>
+                <div style="height: 300px;">
+                    <canvas id="pieChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 📊 BAR CHART -->
+    <div class="col-12 col-lg-6">
+        <div class="card shadow h-100">
+            <div class="card-body">
+                <h5 class="text-center mb-3">Income vs Expense</h5>
+                <div style="height: 300px;">
+                    <canvas id="barChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- 🔥 CHART SCRIPT -->
+<script>
+    const categoryData = {{ data.category_data|safe }};
+    const totalIncome = {{ data.total_income }};
+    const totalExpense = {{ data.total_expense }};
+
+    // PIE CHART
+    const pieLabels = categoryData.map(item => item.category);
+    const pieValues = categoryData.map(item => item.total);
+
+    new Chart(document.getElementById('pieChart'), {
+        type: 'pie',
+        data: {
+            labels: pieLabels,
+            datasets: [{
+                data: pieValues,
+                backgroundColor: [
+                    '#FF6384',
+                    '#36A2EB',
+                    '#FFCE56',
+                    '#4CAF50',
+                    '#9C27B0',
+                    '#FF9800'
+                ]
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false
+        }
+    });
+
+    // BAR CHART
+    new Chart(document.getElementById('barChart'), {
+        type: 'bar',
+        data: {
+            labels: ['Income', 'Expense'],
+            datasets: [{
+                label: 'Amount',
+                data: [totalIncome, totalExpense],
+                backgroundColor: ['#4CAF50', '#F44336']
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false
+        }
+    });
+</script>
+
+{% endblock %}

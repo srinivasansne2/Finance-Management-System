@@ -1,0 +1,28 @@
+{% extends 'frontend/base.html' %}
+
+{% block content %}
+
+<h2 class="mb-4">✏️ Edit Transaction</h2>
+
+<div class="card p-4 shadow col-md-6">
+
+<form method="post">
+    {% csrf_token %}
+
+    <input class="form-control mb-3" name="amount" value="{{ t.amount }}" required>
+
+    <select class="form-control mb-3" name="type">
+        <option value="income" {% if t.type == 'income' %}selected{% endif %}>Income</option>
+        <option value="expense" {% if t.type == 'expense' %}selected{% endif %}>Expense</option>
+    </select>
+
+    <input class="form-control mb-3" name="category" value="{{ t.category }}" required>
+
+    <input class="form-control mb-3" name="date" type="date" value="{{ t.date }}" required>
+
+    <button class="btn btn-warning">Update Transaction</button>
+</form>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends 'frontend/base.html' %}
+
+{% block content %}
+
+<h2 class="mb-4">➕ Add Transaction</h2>
+
+<div class="card p-4 shadow col-md-6">
+
+<form method="post">
+    {% csrf_token %}
+
+    <input class="form-control mb-3" name="amount" type="number" placeholder="Amount" required>
+
+    <select class="form-control mb-3" name="type">
+        <option value="income">Income</option>
+        <option value="expense">Expense</option>
+    </select>
+
+    <input class="form-control mb-3" name="category" placeholder="Category" required>
+
+    <input class="form-control mb-3" name="date" type="date" required>
+
+    <button class="btn btn-success">Add Transaction</button>
+</form>
+
+</div>
+
+{% endblock %}

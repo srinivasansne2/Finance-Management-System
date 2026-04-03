@@ -1,0 +1,107 @@
+{% extends 'frontend/base.html' %}
+
+{% block content %}
+
+<h2 class="mb-4">👥 User Management</h2>
+
+<div class="card shadow p-3">
+
+<table class="table table-hover table-bordered align-middle">
+    <thead class="table-dark">
+        <tr>
+            <th>Username</th>
+            <th>Role</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+
+    <tbody>
+    {% for u in users %}
+        <tr>
+
+            <!-- Username -->
+            <td><strong>{{ u.username }}</strong></td>
+
+            <!-- Role -->
+            <td>
+                <form method="post"
+                      action="/update-user/{{ u.id }}/"
+                      onsubmit="return confirm('Update this user?')">
+
+                    {% csrf_token %}
+
+                    <select name="role"
+                            class="form-select form-select-sm role-field"
+                            data-original="{{ u.role }}"
+                            {% if request.session.username == u.username %}disabled{% endif %}>
+
+                        <option value="admin" {% if u.role == 'admin' %}selected{% endif %}>Admin</option>
+                        <option value="analyst" {% if u.role == 'analyst' %}selected{% endif %}>Analyst</option>
+                        <option value="viewer" {% if u.role == 'viewer' %}selected{% endif %}>Viewer</option>
+                        <option value="data_entry" {% if u.role == 'data_entry' %}selected{% endif %}>Data Entry</option>
+                    </select>
+            </td>
+
+            <!-- Status -->
+            <td class="text-center">
+                    <input type="checkbox"
+                           name="is_active"
+                           class="status-field"
+                           data-original="{{ u.is_active }}"
+                           {% if u.is_active %}checked{% endif %}
+                           {% if request.session.username == u.username %}disabled{% endif %}>
+            </td>
+
+            <!-- Action -->
+            <td class="text-center">
+
+                {% if request.session.username != u.username %}
+                    <button class="btn btn-primary btn-sm update-btn" style="display:none;">
+                        💾 Update
+                    </button>
+                {% else %}
+                    <span class="text-muted">Current User</span>
+                {% endif %}
+
+                </form>
+            </td>
+
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+</div>
+
+<!-- 🔥 JavaScript: Show Update Button Only When Changed -->
+<script>
+document.querySelectorAll("tr").forEach(row => {
+
+    const roleField = row.querySelector(".role-field");
+    const statusField = row.querySelector(".status-field");
+    const updateBtn = row.querySelector(".update-btn");
+
+    if (!roleField || !statusField || !updateBtn) return;
+
+    const originalRole = roleField.dataset.original;
+    const originalStatus = statusField.dataset.original === "True";
+
+    function checkChanges() {
+        const currentRole = roleField.value;
+        const currentStatus = statusField.checked;
+
+        if (currentRole !== originalRole || currentStatus !== originalStatus) {
+            updateBtn.style.display = "inline-block";
+        } else {
+            updateBtn.style.display = "none";
+        }
+    }
+
+    roleField.addEventListener("change", checkChanges);
+    statusField.addEventListener("change", checkChanges);
+
+});
+</script>
+
+{% endblock %}
