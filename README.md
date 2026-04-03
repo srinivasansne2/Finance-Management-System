@@ -91,21 +91,19 @@ python manage.py runserver
 
 Add your screenshots in a folder named `screenshots/`:
 
--   login.png
--   dashboard.png
--   charts.png
--   transactions.png
--   filters.png
--   users.png
+-   screenshots/login.png
+-   screenshots/register.png
+-   screenshots/dashboard.png
+-   screenshots/transactions.png
+-   screenshots/users.png
+-   screenshots/profile.png
 
 ------------------------------------------------------------------------
 
 ## 💬 Author
 
 **Srinivasan R**
-
-Portfolio: https://www.srinivasan.life
-
+Portfolio: https://sri.srinivasansne2.workers.dev/
 ------------------------------------------------------------------------
 
 ## ⭐ Support
