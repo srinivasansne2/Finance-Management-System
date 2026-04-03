@@ -22,12 +22,12 @@ charts**.
 
 ## 👥 User Roles & Permissions
 
-  Role         Dashboard   View Transactions   Add   Edit   Delete
-  ------------ ----------- ------------------- ----- ------ --------
-  Admin        ✅          ✅                  ✅    ✅     ✅
-  Analyst      ✅          ✅                  ❌    ❌     ❌
-  Data Entry   ✅          Own Data Only       ✅    ❌     ❌
-  Viewer       ✅          ❌                  ❌    ❌     ❌
+| Role        | Dashboard | View Transactions | Add | Edit | Delete |
+|------------|----------|------------------|-----|------|--------|
+| Admin      | ✅       | ✅               | ✅  | ✅   | ✅     |
+| Analyst    | ✅       | ✅               | ❌  | ❌   | ❌     |
+| Data Entry | ✅       | Own Data Only    | ✅  | ❌   | ❌     |
+| Viewer     | ✅       | ❌               | ❌  | ❌   | ❌     |
 
 ------------------------------------------------------------------------
 
